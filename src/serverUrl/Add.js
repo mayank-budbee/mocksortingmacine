@@ -31,7 +31,11 @@ function Add(){
     }
     return(
         <div>
-            <Badge bg="secondary" style={{margin: "40px 10px 10px 10px"}}><h1>Mock Sorting Machine</h1></Badge>
+            <Badge bg="secondary"
+                   style={{margin: "40px 5px 5px 10px", padding: "10px 40px 10px 40px"}}>
+                <h1>Mock Sorting Machine</h1>
+            </Badge>
+
             <Form className={"d-grid gap-2"} style={{margin: "5rem"}}>
                 <Form.Group className={"mb-3"} controlId={"forTitle"}>
                     <Form.Control type={"text"} placeholder={"Scan the barcode"} required
@@ -49,7 +53,8 @@ function Add(){
                 <Form.Group className={"mb-3"} controlId={"forHeight"}>
                     <MDBRange defaultValue={0.1} min='0' max='1' step='0.01' id='forHeight' label='Height (meters)'/>
                 </Form.Group>
-                <Button onClick={(e) => handleSubmit(e)} type={"submit"}>Submit</Button>
+                <Button size={"lg"} style={{fontSize: "60px", fontWeight: "Bold"}}onClick={(e) => handleSubmit(e)}
+                        type={"submit"}>Submit</Button>
             </Form>
         </div>
     )
