@@ -2,10 +2,10 @@ const net = require('net');
 
 // Local '127.0.0.1' 9000
 // Stockholm Office Terminal server '192.168.1.128' 48898
-// const tcpServerHost = '192.168.1.128'
-// const tcpServerPort = 48898
-const tcpServerHost = '127.0.0.1'
-const tcpServerPort = 9000
+const tcpServerHost = '192.168.1.128'
+const tcpServerPort = 48898
+// const tcpServerHost = '127.0.0.1'
+// const tcpServerPort = 9000
 
 var parcels = []
 var obj = {}

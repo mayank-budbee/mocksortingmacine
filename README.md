@@ -17,7 +17,7 @@
 * In case terminal server is not running there is a mock terminal server with code.
   * It can be started as `node src/server/tcpServer.js`
   * Update host and port for mock terminal server in file `src/server/tcpClient.js`
-* run `node src/reactServer/reactServer.js` to start server.
+* run `node src/server/reactServer.js` to start server.
   * Server port is mentioned in the same file in case you update it, the following file should needs update: ``
 * run `npm run start` to start react ui.
 
