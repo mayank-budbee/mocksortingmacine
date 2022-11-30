@@ -1,0 +1,5 @@
+# Terminal reactServer at Stockholm office TCP command
+% nc 192.168.1.128 48898
+<STX>{"machine":"brunna_top","barcodes":["TEST-PARCEL_07_004"],"dimensions":{"width":0.390,"height":0.400,"length":0.576},"sickVolumeState":["0000","00000000","00000001"]}<ETX>
+<STX>{"machine":"brunna_top","barcode":"TEST-PARCEL_07_004","lane":"07"}<ETX>
+

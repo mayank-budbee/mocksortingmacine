@@ -1,0 +1,8 @@
+
+http://localhost:9001/?barcode=12342&L=10&W=20&H=30
+
+###
+
+GET http://localhost:9001/scan?barcode=12342&L=10&W=20&H=30
+
+###
