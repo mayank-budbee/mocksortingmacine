@@ -1,7 +1,4 @@
-
-
-var net = require('net');
-
+const net = require('net');
 
 // Local '127.0.0.1' 9000
 // Stockholm Office Terminal server '192.168.1.128' 48898
@@ -51,15 +48,8 @@ module.exports.sendScan = function (scanObject){
         console.log('TCP Received: ' + data);
         client.destroy(); // kill client after server's response
 
-        // obj.lane = JSON.parse(data).lane
         const lane = extractLaneFromTcpResponse(data)
         addObjToScanList(lane)
-
-
-        // console.log("Parcels after tcp response:" + JSON.stringify(parcels))
-        // console.log("Lane: " + JSON.stringify(obj.lane))
-
-
     });
 
     client.on('close', function() {

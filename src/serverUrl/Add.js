@@ -8,9 +8,6 @@ import { MDBRange } from 'mdb-react-ui-kit';
 
 function Add(){
     const [title, setTitle] = useState('');
-    // const [length, setLength] = useState('');
-    // const [width, setWidth] = useState('');
-    // const [height, setHeight] = useState('');
 
     let history = useNavigate();
 
@@ -39,7 +36,9 @@ function Add(){
                 <Form.Group className={"mb-3"} controlId={"forTitle"}>
                     <Form.Control type={"text"} placeholder={"Scan the barcode"} required
                                   onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
-                                  onChange={(e) => setTitle(e.target.value)} />
+                                  onChange={(e) => setTitle(e.target.value)}
+                                  autoFocus
+                            />
                 </Form.Group>
                 <Form.Group className={"mb-3"} controlId={"forLength"}>
                     <MDBRange defaultValue={0.2} min='0' max='1' step='0.01' id='forLength' label='Length (meters)' />
