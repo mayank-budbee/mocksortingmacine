@@ -23,7 +23,12 @@ function handleConnection(conn) {
         // var msg = "Prefix Lane:" + randomIntFromInterval(1,20) + " Suffix"
         // var msg = '{"lane":"'+randomIntFromInterval(1,20) + '"}'
         var msg = '<STX>{"machine":"brunna_top","barcode":"TEST-PARCEL_07_004","lane":"'+randomIntFromInterval(1,20)+'"}<ETX>'
-        conn.write(msg)
+
+        setTimeout(() => {
+            // console.log('hello world')
+            conn.write(msg)
+        }, 1000);
+
     }
     function onConnClose() {
         console.log('connection from %s closed', remoteAddress);

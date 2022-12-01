@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Badge, Button, Form} from 'react-bootstrap'
+import {Badge, Button, Form, Spinner} from 'react-bootstrap'
 import "bootstrap/dist/css/bootstrap.min.css"
 import serverUrl from "./serverUrl"
 import {v4 as uuid} from 'uuid'
@@ -8,11 +8,15 @@ import { MDBRange } from 'mdb-react-ui-kit';
 
 function Add(){
     const [title, setTitle] = useState('');
+    const [spinner, setSpinner] = useState(false);
 
     let history = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        e.target.disabled = true
+
+        setSpinner(true)
         const id = uuid()
         let uniqueId = id.slice(0,8)
         const l = document.getElementById("forLength").value
@@ -20,7 +24,7 @@ function Add(){
         const h =  document.getElementById("forHeight").value
 
         async function fetchData() {
-            const response = await fetch(
+            await fetch(
                 // 'http://localhost:9001/scan?barcode=12342&L=10&W=20&H=30'
                 serverUrl+'/scan?barcode='+title+'&L='+l+'&W='+w+'&H='+h+'&uuid='+uniqueId
             );
@@ -53,8 +57,12 @@ function Add(){
                 <Form.Group className={"mb-3"} controlId={"forHeight"}>
                     <MDBRange defaultValue={0.1} min='0' max='1' step='0.01' id='forHeight' label='Height (meters)'/>
                 </Form.Group>
-                <Button size={"lg"} style={{fontSize: "60px", fontWeight: "Bold"}}onClick={(e) => handleSubmit(e)}
-                        type={"submit"}>Submit</Button>
+                <Button size={"lg"} style={{fontSize: "60px", fontWeight: "Bold"}}
+                        onClick={(e) => handleSubmit(e)}
+                        type={"submit"}>Submit {' '}
+                    {spinner ? <Spinner/> : ''}
+
+                </Button>
             </Form>
         </div>
     )

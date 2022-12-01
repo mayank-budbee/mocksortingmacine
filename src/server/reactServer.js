@@ -29,9 +29,16 @@ const reactServer = http.createServer((req, res) => {
             // res.write("Hello, you sent\n" +  JSON.stringify(parsed.query))
             console.log("scan request received: " + JSON.stringify(parsed.query))
             console.log("Tcp reactServer response " + tcpClient.sendScan(parsed.query))
-            res.writeHead(200, headers)
-            res.write('{"sent": "success"}')
-            res.end()
+
+            // Wait until
+            setTimeout(() => {
+                res.writeHead(200, headers)
+                res.write('{"sent": "success"}')
+                res.end()
+            }, 2000);
+
+
+
         }else
         if (reqUrl == "/delete") {
             console.log("delete request received: " + JSON.stringify(parsed.query))
