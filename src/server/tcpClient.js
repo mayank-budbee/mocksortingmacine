@@ -2,13 +2,14 @@ const net = require('net');
 
 // Local '127.0.0.1' 9000
 // Stockholm Office Terminal server '192.168.1.128' 48898
-// const tcpServerHost = '192.168.1.128'
-// const tcpServerPort = 48898
-const tcpServerHost = '127.0.0.1'
-const tcpServerPort = 9000
+const tcpServerHost = '192.168.1.128'
+const tcpServerPort = 48898
+// const tcpServerHost = '127.0.0.1'
+// const tcpServerPort = 9000
 
 var parcels = []
 var obj = {}
+var err = {}
 
 function extractLaneFromTcpResponse(tcpResponse){
     const trimmedVal = String(tcpResponse).replace("<STX>", "").replace("<ETX>", "")
@@ -29,6 +30,7 @@ function addObjToScanList(lane) {
 
 module.exports.sendScan = function (scanObject){
     client = new net.Socket();
+
     client.connect(tcpServerPort, tcpServerHost, function() {
         console.log('TCP Connected at :' + tcpServerHost + ":" + tcpServerPort);
         // Expected format: <STX>{"machine":"brunna_top","barcodes":["TEST-PARCEL_07_004"],"dimensions":{"width":0.390,"height":0.400,"length":0.576},"sickVolumeState":["0000","00000000","00000001"]}<ETX>
@@ -43,6 +45,13 @@ module.exports.sendScan = function (scanObject){
         obj = scanObject
         // console.log("Obj: " + JSON.stringify(obj))
     });
+
+    client.on('error', function(error) {
+        console.log('TCP Error: ' + error);
+        err = error
+        client.destroy(); // kill client after server's response
+    });
+
 
     client.on('data', function(data) {
         console.log('TCP Received: ' + data);
@@ -75,3 +84,10 @@ module.exports.remove = function (query){
     console.log("Parcels count: " + parcels.length)
 }
 
+module.exports.getError = function (){
+    return err
+}
+
+module.exports.clearError = function (){
+    err = {}
+}

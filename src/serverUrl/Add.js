@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Badge, Button, Form, Spinner} from 'react-bootstrap'
+import {Badge, Button, Form, Modal, Spinner} from 'react-bootstrap'
 import "bootstrap/dist/css/bootstrap.min.css"
 import serverUrl from "./serverUrl"
 import {v4 as uuid} from 'uuid'
@@ -9,6 +9,14 @@ import { MDBRange } from 'mdb-react-ui-kit';
 function Add(){
     const [title, setTitle] = useState('');
     const [spinner, setSpinner] = useState(false);
+
+    const [show, setShow] = useState(false);
+    const [host, setHost] = useState('');
+    const [port, setPort] = useState('');
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
 
     let history = useNavigate();
 
@@ -24,13 +32,27 @@ function Add(){
         const h =  document.getElementById("forHeight").value
 
         async function fetchData() {
-            await fetch(
+            const response =  await fetch(
                 // 'http://localhost:9001/scan?barcode=12342&L=10&W=20&H=30'
                 serverUrl+'/scan?barcode='+title+'&L='+l+'&W='+w+'&H='+h+'&uuid='+uniqueId
             );
+
+            const responseDate = await response.json()
+            return responseDate
         }
         fetchData().then(response => {
-            history("/")
+            setSpinner(false)
+            e.target.disabled = false
+            // console.log("Scan response: " + JSON.stringify(response))
+            if(response.errno){
+                // alert(JSON.stringify())
+                setHost(response.address)
+                setPort(response.port)
+                handleShow()
+            }
+            else {
+                history("/")
+            }
         });
     }
     return(
@@ -63,6 +85,18 @@ function Add(){
                     {spinner ? <Spinner/> : ''}
 
                 </Button>
+
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title style={{color: 'red'}}>Error</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Could not connect to terminal server {host}@{port}</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </Form>
         </div>
     )

@@ -22,10 +22,9 @@ const reactServer = http.createServer((req, res) => {
     if (req.method == "GET") {
         if (reqUrl == "/") {
             // Send a JSON version of our URL query
-            res.write("Hello, you sent\n" +  JSON.stringify(parsed.query))
+            res.write("Hello, you sent\n" + JSON.stringify(parsed.query))
             res.end()
-        }else
-        if (reqUrl == "/scan") {
+        } else if (reqUrl == "/scan") {
             // res.write("Hello, you sent\n" +  JSON.stringify(parsed.query))
             console.log("scan request received: " + JSON.stringify(parsed.query))
             console.log("Tcp reactServer response " + tcpClient.sendScan(parsed.query))
@@ -33,26 +32,30 @@ const reactServer = http.createServer((req, res) => {
             // Wait until
             setTimeout(() => {
                 res.writeHead(200, headers)
-                res.write('{"sent": "success"}')
-                res.end()
+                if (tcpClient.getError()) {
+                    res.write(JSON.stringify(tcpClient.getError()))
+                    tcpClient.clearError()
+                    res.end()
+                } else {
+                    res.write('{"sent": "success"}')
+                    res.end()
+                }
+
+
             }, 2000);
 
 
-
-        }else
-        if (reqUrl == "/delete") {
+        } else if (reqUrl == "/delete") {
             console.log("delete request received: " + JSON.stringify(parsed.query))
             tcpClient.remove(parsed.query)
             res.writeHead(200, headers)
             res.write('{"sent": "success"}')
             res.end()
-        }else
-        if (reqUrl == "/get") {
+        } else if (reqUrl == "/get") {
             console.log("Tcp reactServer response " + JSON.stringify(tcpClient.getResponse()))
             res.write(JSON.stringify(tcpClient.getResponse()))
             res.end()
-        }else
-        if (reqUrl == "/getAll") {
+        } else if (reqUrl == "/getAll") {
             // const parcels = [ { "id": "bba265e3", "title": "123651214", "description": "10 x 20 x 30", "lane" : "2" },
             //     { "id": "67e0b8a5", "title": "122432123", "description": "15 x 25 x 40", "lane" : "5" }];
 
