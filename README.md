@@ -20,6 +20,7 @@
 * run `node src/server/reactServer.js` to start server.
   * Server port is mentioned in the same file in case you update it, the following file should needs update: ``
 * run `npm run start` to start react ui.
+* Example barcode: 373501099201933926
 
 * The following page should open on browser (http://localhost:3000/):
   * ![home page](./public/home.png)

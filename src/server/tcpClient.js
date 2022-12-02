@@ -38,7 +38,9 @@ module.exports.sendScan = function (scanObject){
         scanObject.barcode = scanObject.barcode.replace(/[?]/g,"_")
         console.log("Barcode: " + scanObject.barcode)
 
-        const objToSend = '<STX>{"machine":"brunna_top","barcodes":["'+scanObject.barcode+'"],"dimensions":{"width":0.390,"height":0.400,"length":0.576},"sickVolumeState":["0000","00000000","00000001"]}<ETX>\n'
+        const objToSend = '<STX>{"machine":"brunna_top","barcodes":["'+scanObject.barcode+'"],' +
+            '"dimensions":{"width":' +scanObject.W+ ',"height":' +scanObject.H+ ',"length":' +scanObject.L+ '},' +
+            '"sickVolumeState":["0000","00000000","00000001"]}<ETX>\n'
         console.log("Sending TCP string: " + objToSend)
         client.write(objToSend);
         // client.write(JSON.stringify(objToSend));
