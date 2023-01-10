@@ -2,7 +2,9 @@
 const http = require("http");
 // Import the URL module
 const url = require("url");
-var net = require('net');
+const os = require("os");
+const ip = require("ip");
+
 const tcpClient = require('./tcpClient')
 
 const reactServer = http.createServer((req, res) => {
@@ -79,5 +81,10 @@ const reactServer = http.createServer((req, res) => {
 
 })
 // Have the reactServer listen on port 9001
-reactServer.listen(9001)
-console.log("Server started at port 9001")
+const port  = 9001
+const hostname = os.hostname();
+const ipVal = ip.address();
+reactServer.listen(port)
+console.log("React server started: " + hostname + '@' + port)
+console.log("Or: " + ipVal + '@' + port)
+console.log("Or: localhost@" + port)

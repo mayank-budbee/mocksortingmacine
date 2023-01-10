@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.2.3",
     "http": "0.0.1-security",
+    "ip": "^1.1.8",
     "mdb-react-ui-kit": "^5.0.0",
     "net": "^1.0.2",
     "react": "^18.2.0",
